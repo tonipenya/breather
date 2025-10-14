@@ -2,10 +2,10 @@ const params = new URLSearchParams(window.location.search);
 
 const breathSeconds = params.get("breath_duration_s")
     ? Number(params.get("breath_duration_s"))
-    : 4;
+    : 5;
 const sessionSeconds = params.get("session_duration_m")
     ? Number(params.get("session_duration_m")) * 60
-    : 12;
+    : 5 * 60;
 
 let breathElement = document.getElementById("breath");
 let progressElement = document.getElementById("progress");
