@@ -1,8 +1,9 @@
 :root {
     --color-in: lightskyblue;
     --color-out: lightcoral;
-    --color-off: lightgray;
-    --color-progress: light-dark(var(--color-off), #444);
+    --color-progress: light-dark(lightgray, #444);
+    --breath-duration: 5s;
+    --session-duration: calc(5 * 60s);
     color-scheme: light dark;
 }
 
@@ -42,22 +43,55 @@ footer {
     width: min(50vw, 50vh);
     height: min(50vw, 50vh);
     border-radius: 50%;
-    transition: transform 1s cubic-bezier(0.37, -0.07, 0.37, -0.07),
-        background-color 1s ease-in-out;
+    position: relative; /* needed for ::before/::after */
+    animation: breathe var(--breath-duration) cubic-bezier(0.51, 0, 0.52, 1) infinite
+        alternate;
+    will-change: transform;
 }
 
-.breath-in {
-    background-color: var(--color-in);
-    transform: scale(1.25);
+@keyframes breathe {
+    from {
+        transform: scale(0.75);
+    }
+    to {
+        transform: scale(1.25);
+    }
 }
 
-.breath-out {
-    background-color: var(--color-out);
-    transform: scale(0.75);
+#breath.paused {
+    animation-play-state: paused;
 }
 
-.breath-off {
-    background-color: var(--color-off);
+#breath::before,
+#breath::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+}
+
+#breath::before {
+    background: var(--color-out);
+    animation: fade var(--breath-duration) ease-in-out infinite alternate;
+}
+
+#breath::after {
+    background: var(--color-in);
+    animation: fade var(--breath-duration) ease-in-out infinite alternate-reverse;
+}
+
+#breath.paused::before,
+#breath.paused::after {
+    animation-play-state: paused;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
 
 #progress {
@@ -65,5 +99,5 @@ footer {
     background: var(--color-progress);
     align-self: flex-start;
     width: 0%;
-    transition: width 0.5s linear;
+    transition: width var(--session-duration) linear;
 }
