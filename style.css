@@ -96,8 +96,24 @@ footer {
 
 #progress {
     height: 100%;
+    width: 100%;
     background: var(--color-progress);
     align-self: flex-start;
-    width: 0%;
-    transition: width var(--session-duration) linear;
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation-play-state: paused;
+    animation: fill-progress var(--session-duration) linear forwards;
+}
+
+#progress.paused {
+    animation-play-state: paused;
+}
+
+@keyframes fill-progress {
+    0% {
+        transform: scaleX(0);
+    }
+    100% {
+        transform: scaleX(1);
+    }
 }

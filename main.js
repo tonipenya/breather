@@ -28,7 +28,7 @@ class Breather {
     }
 
     start() {
-        progressElement.style.width = "100%"; // Trigger CSS animation
+        progressElement.classList.remove("paused");
         breathElement.classList.remove("paused");
 
         setTimeout(() => {
