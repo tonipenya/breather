@@ -25,18 +25,38 @@ class Breather {
             "--session-duration",
             `${this.sessionSeconds}s`
         );
+        this.isPlaying = false;
+        this.remaining = this.sessionSeconds * 1000;
     }
 
-    start() {
+    play() {
+        this.isPlaying = true;
         progressElement.classList.remove("paused");
         breathElement.classList.remove("paused");
 
-        setTimeout(() => {
+        this.startTime = Date.now();
+        this.timeout = setTimeout(() => {
             console.info("Session complete");
             breathElement.classList.add("paused");
-        }, this.sessionSeconds * 1000);
+        }, this.remaining);
+    }
+
+    pause() {
+        this.isPlaying = false;
+        progressElement.classList.add("paused");
+        breathElement.classList.add("paused");
+
+        this.remaining -= Date.now() - this.startTime;
+        clearTimeout(this.timeout);
     }
 }
 
 let breather = new Breather(breathSeconds, sessionSeconds);
-breather.start();
+
+breathElement.addEventListener("click", () => {
+    if (breather.isPlaying) {
+        breather.pause();
+    } else {
+        breather.play();
+    }
+});
