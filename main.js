@@ -56,7 +56,26 @@ let breather = new Breather(breathSeconds, sessionSeconds);
 breathElement.addEventListener("click", () => {
     if (breather.isPlaying) {
         breather.pause();
+        releaseWakeLock();
     } else {
         breather.play();
+        requestWakeLock();
     }
 });
+
+let wakeLock = null;
+async function requestWakeLock() {
+    try {
+        wakeLock = await navigator.wakeLock.request("screen");
+    } catch (e) {
+        console.log("wakelock err:", e);
+    }
+}
+
+async function releaseWakeLock() {
+    try {
+        await wakeLock.release();
+    } catch (e) {
+        console.log("wakelock err:", e);
+    }
+}
