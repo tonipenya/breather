@@ -2,6 +2,7 @@
     --color-in: lightskyblue;
     --color-out: lightcoral;
     --color-progress: light-dark(lightgray, #444);
+    --color-breath-shadow: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
     --breath-duration: 5s;
     --session-duration: calc(5 * 60s);
     color-scheme: light dark;
@@ -83,6 +84,11 @@ footer {
 #breath.paused::before,
 #breath.paused::after {
     animation-play-state: paused;
+}
+
+/* soft drop shadow + subtle inset to give depth */
+#breath {
+    box-shadow: 0 0px 40px -10px var(--color-breath-shadow);
 }
 
 @keyframes fade {
