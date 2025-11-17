@@ -6,10 +6,46 @@
         <title>Breather</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&display=swap"
+            rel="stylesheet"
+        />
     </head>
     <body>
+        <button id="menu-toggle">☰</button>
         <main>
             <div id="breath" class="paused"></div>
+            <aside id="settings">
+                <form action="./index.html" method="get">
+                    <input type="hidden" name="autoplay" value="true" />
+                    <ul>
+                        <li>
+                            <label for="duration">Session duration (m):</label>
+                            <input
+                                type="number"
+                                id="duration"
+                                name="session_duration_m"
+                                step="0.01"
+                                value="5"
+                            />
+                        </li>
+                        <li>
+                            <label for="breath-duration">Breath duration (s):</label>
+                            <input
+                                type="number"
+                                id="breath-duration"
+                                name="breath_duration_s"
+                                value="5"
+                            />
+                        </li>
+                        <li class="action">
+                            <button id="start-button" type="submit">Start</button>
+                        </li>
+                    </ul>
+                </form>
+            </aside>
         </main>
         <footer>
             <div id="progress" class="paused"></div>

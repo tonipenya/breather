@@ -6,12 +6,16 @@ const breathSeconds = params.get("breath_duration_s")
 const sessionSeconds = params.get("session_duration_m")
     ? Number(params.get("session_duration_m")) * 60
     : 5 * 60;
+const autoplay = params.get("autoplay") === "true";
 
-let breathElement = document.getElementById("breath");
-let progressElement = document.getElementById("progress");
+document.querySelector('input[name="session_duration_m"]').value = sessionSeconds / 60;
+document.querySelector('input[name="breath_duration_s"]').value = breathSeconds;
+
+const breathElement = document.getElementById("breath");
+const progressElement = document.getElementById("progress");
 
 class Breather {
-    constructor(breathSeconds, sessionSeconds) {
+    constructor(breathSeconds, sessionSeconds, autoplay) {
         console.info(
             `Created Breather with breathSeconds=${breathSeconds}, sessionSeconds=${sessionSeconds}`
         );
@@ -27,6 +31,10 @@ class Breather {
         );
         this.isPlaying = false;
         this.remaining = this.sessionSeconds * 1000;
+
+        if (autoplay) {
+            this.play();
+        }
     }
 
     play() {
@@ -51,7 +59,7 @@ class Breather {
     }
 }
 
-let breather = new Breather(breathSeconds, sessionSeconds);
+const breather = new Breather(breathSeconds, sessionSeconds, autoplay);
 
 breathElement.addEventListener("click", () => {
     if (breather.isPlaying) {
@@ -79,3 +87,16 @@ async function releaseWakeLock() {
         console.log("wakelock err:", e);
     }
 }
+
+const menuToggle = document.getElementById("menu-toggle");
+const settingsAside = document.getElementById("settings");
+
+menuToggle.addEventListener("click", () => {
+    settingsAside.classList.toggle("open");
+});
+// Hide when clicking outside
+document.addEventListener("click", (e) => {
+    if (!menuToggle.contains(e.target) && !settingsAside.contains(e.target)) {
+        settingsAside.classList.remove("open");
+    }
+});

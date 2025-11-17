@@ -2,6 +2,7 @@
     --color-in: lightskyblue;
     --color-out: lightcoral;
     --color-progress: light-dark(lightgray, #444);
+    --color-foreground: light-dark(#444, #ddd);
     --color-breath-shadow: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.4));
     --breath-duration: 5s;
     --session-duration: calc(5 * 60s);
@@ -12,6 +13,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: var(--color-foreground);
+    font-family: "Mulish", sans-serif;
 }
 
 html,
@@ -122,4 +125,94 @@ footer {
     100% {
         transform: scaleX(1);
     }
+}
+
+#menu-toggle {
+    position: fixed;
+    top: 0;
+    right: 0.5rem;
+    z-index: 1100;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    opacity: 0.1;
+}
+
+#menu-toggle:hover {
+    opacity: 1;
+}
+
+#settings {
+    position: fixed;
+    top: 4px;
+    right: 5px;
+    padding: 3rem 1rem 1rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 20px var(--color-breath-shadow);
+    visibility: hidden;
+    z-index: 1050;
+    background: canvas;
+    box-sizing: border-box;
+}
+
+#settings.open {
+    visibility: visible;
+}
+
+#settings ul {
+    display: flex;
+    flex-direction: column;
+}
+
+#settings li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.7rem 0;
+}
+
+#settings label {
+    display: block;
+}
+
+#settings input {
+    box-sizing: border-box;
+    border: 1px solid var(--color-progress);
+    border-radius: 0.1rem;
+    padding: 0.25rem 0.5rem;
+    outline: none;
+    width: 3rem;
+    text-align: right;
+}
+
+#settings li.action {
+    margin-top: 1rem;
+    text-align: center;
+    align-self: flex-end;
+}
+
+/* Remove number input spinners (arrows) */
+/* Chrome, Safari, Edge, Opera */
+#settings input[type="number"]::-webkit-inner-spin-button,
+#settings input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+#settings input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#start-button {
+    padding: 0.7em;
+    border-radius: 0.1rem;
+    font-size: 1rem;
+    border: none;
+    font-weight: bold;
+    background: var(--color-progress);
+    color: var(--color-foreground);
+    cursor: pointer;
 }
