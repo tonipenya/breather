@@ -9,6 +9,14 @@
     color-scheme: light dark;
 }
 
+:root[data-theme="green"] {
+    --color-in: #f0f0f0;
+    --color-out: #f0f0f0;
+    --color-progress: #f0f0f0;
+    background: #66cdaa;
+    color-scheme: light;
+}
+
 * {
     margin: 0;
     padding: 0;

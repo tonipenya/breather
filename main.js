@@ -7,7 +7,9 @@ const sessionSeconds = params.get("session_duration_m")
     ? Number(params.get("session_duration_m")) * 60
     : 5 * 60;
 const autoplay = params.get("autoplay") === "true";
+const theme = params.get("theme");
 
+setTheme(theme);
 document.querySelector('input[name="session_duration_m"]').value = sessionSeconds / 60;
 document.querySelector('input[name="breath_duration_s"]').value = breathSeconds;
 
@@ -100,3 +102,13 @@ document.addEventListener("click", (e) => {
         settingsAside.classList.remove("open");
     }
 });
+
+function setTheme(theme) {
+    if (theme === "light" || theme === "dark") {
+        document.documentElement.removeAttribute("data-theme");
+        document.documentElement.style.colorScheme = theme;
+        return;
+    }
+
+    document.documentElement.setAttribute("data-theme", theme);
+}
